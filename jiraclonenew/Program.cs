@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<jiraclonenew.Data.ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql("Host=localhost;Port=5432;Database=jiraclonenew;Username=postgres;Password=test1234"));
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<jiraclonenew.Models.ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<jiraclonenew.Data.ApplicationDbContext>()
@@ -22,7 +22,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    //app.UseMigrationsEndPoint();
 }
 else
 {
