@@ -1,0 +1,32 @@
+@page
+@model jiraclonenew.Pages.Boards.IndexModel
+@using jiraclonenew.Models
+@{
+    ViewData["Title"] = "Boards";
+}
+
+<h1>Boards</h1>
+
+@foreach (var project in Model.Projects)
+{
+    <h2>@project.Name</h2>
+    <div class="row board mb-5">
+        @foreach (TicketStatus status in Enum.GetValues(typeof(TicketStatus)))
+        {
+            <div class="col-md-3">
+                <h5>@status</h5>
+                <div class="card mb-3" style="min-height:150px;">
+                    <div class="card-body p-2">
+                        @foreach (var ticket in Model.TicketsForStatus(project, status))
+                        {
+                            <div class="ticket-item border p-1 mb-2 rounded">
+                                <strong>@ticket.Title</strong>
+                                <div class="small text-muted">@ticket.Type - @ticket.Priority</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

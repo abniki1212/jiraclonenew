@@ -20,3 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+.board .ticket-item {
+  background-color: #f8f9fa;
+}
+.board h5 {
+  text-transform: capitalize;
+  font-weight: bold;
+}
