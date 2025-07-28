@@ -13,5 +13,7 @@ namespace jiraclonenew.Data
 
         public DbSet<Project> Projects => Set<Project>();
         public DbSet<Ticket> Tickets => Set<Ticket>();
+        public DbSet<Comment> Comments => Set<Comment>();
+        public DbSet<Sprint> Sprints => Set<Sprint>();
     }
 }

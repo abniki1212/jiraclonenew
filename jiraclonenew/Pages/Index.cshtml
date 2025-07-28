@@ -1,10 +1,6 @@
-﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@page
+@model Microsoft.AspNetCore.Mvc.RazorPages.PageModel
+@{ ViewData["Title"] = "Dashboard"; }
+<h1>Dashboard</h1>
+<p>Welcome to JiraClone!</p>
+<p><a class="btn btn-primary" asp-page="/Projects/Create">Create Project</a></p>
