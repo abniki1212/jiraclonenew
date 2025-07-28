@@ -1,6 +1,62 @@
 @page
 @model jiraclonenew.Pages.IndexModel
-@{ ViewData["Title"] = "Dashboard"; }
-<h1>Dashboard</h1>
-<p>Welcome to JiraClone!</p>
-<p><a class="btn btn-primary" asp-page="/Projects/Create">Create Project</a></p>
+@using jiraclonenew.Models
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row text-center mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm dashboard-metric">
+            <div class="card-body">
+                <h6 class="text-muted">Projects</h6>
+                <h2>@Model.ProjectCount</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm dashboard-metric">
+            <div class="card-body">
+                <h6 class="text-muted">Tickets</h6>
+                <h2>@Model.TicketCount</h2>
+            </div>
+        </div>
+    </div>
+    @foreach (var kvp in Model.StatusCounts)
+    {
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm dashboard-metric">
+                <div class="card-body">
+                    <h6 class="text-muted">@kvp.Key</h6>
+                    <h2>@kvp.Value</h2>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@foreach (var project in Model.Projects)
+{
+    <h2>@project.Name</h2>
+    <div class="row board mb-5">
+        @foreach (TicketStatus status in Enum.GetValues(typeof(TicketStatus)))
+        {
+            <div class="col-md-3">
+                <h5>@status</h5>
+                <div class="card mb-3" style="min-height:150px;">
+                    <div class="card-body p-2">
+                        @foreach (var ticket in Model.TicketsForStatus(project, status))
+                        {
+                            <div class="ticket-item border p-1 mb-2 rounded">
+                                <strong>@ticket.Title</strong>
+                                <div class="small text-muted">@ticket.Type - @ticket.Priority</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -27,3 +27,9 @@ body {
   text-transform: capitalize;
   font-weight: bold;
 }
+
+/* Dashboard metric cards */
+.dashboard-metric h2 {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
