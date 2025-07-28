@@ -7,11 +7,11 @@ using jiraclonenew.Models;
 
 namespace jiraclonenew.Pages.Projects
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
-        public CreateModel(ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,9 +21,13 @@ namespace jiraclonenew.Pages.Projects
 
         public SelectList UserOptions { get; set; } = null!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int id)
         {
+            Project = await _context.Projects.FindAsync(id);
+            if (Project == null) return NotFound();
+
             UserOptions = new SelectList(await _context.Users.ToListAsync(), "Id", "Email");
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -34,7 +38,15 @@ namespace jiraclonenew.Pages.Projects
                 return Page();
             }
 
-            _context.Projects.Add(Project);
+            var projectInDb = await _context.Projects.FindAsync(Project.Id);
+            if (projectInDb == null) return NotFound();
+
+            projectInDb.Name = Project.Name;
+            projectInDb.Key = Project.Key;
+            projectInDb.Description = Project.Description;
+            projectInDb.LeadId = Project.LeadId;
+            projectInDb.Status = Project.Status;
+
             await _context.SaveChangesAsync();
             return RedirectToPage("Index");
         }

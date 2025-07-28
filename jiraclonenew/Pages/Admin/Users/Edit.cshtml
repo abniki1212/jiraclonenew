@@ -1,0 +1,27 @@
+@page "{id}"
+@model jiraclonenew.Pages.Admin.Users.EditModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h1>Edit User</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label>Email</label>
+        <input class="form-control" value="@Model.Input.Email" readonly />
+    </div>
+    <fieldset>
+        <legend>Roles</legend>
+        @foreach (var role in Model.Input.Roles.Keys)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="Input.Roles[@role]" value="true" @(Model.Input.Roles[role] ? "checked" : "") />
+                <input type="hidden" name="Input.Roles[@role]" value="false" />
+                <label class="form-check-label">@role</label>
+            </div>
+        }
+    </fieldset>
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+    <a asp-page="Index" class="btn btn-secondary mt-3">Cancel</a>
+</form>

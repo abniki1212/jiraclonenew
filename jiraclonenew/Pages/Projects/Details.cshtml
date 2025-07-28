@@ -1,0 +1,12 @@
+@page
+@model jiraclonenew.Pages.Projects.DetailsModel
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<h1>@Model.Project.Name (@Model.Project.Key)</h1>
+<p>@Model.Project.Description</p>
+<ul>
+    <li><strong>Lead:</strong> @Model.Project.Lead?.Email</li>
+    <li><strong>Status:</strong> @Model.Project.Status</li>
+</ul>

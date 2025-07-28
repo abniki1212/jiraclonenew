@@ -1,0 +1,47 @@
+@page
+@model jiraclonenew.Pages.Admin.Users.IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1 class="mb-3">Users</h1>
+
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="Search" value="@Model.Search" class="form-control" placeholder="Search users" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Users)
+        {
+            <tr>
+                <td>@row.User.UserName</td>
+                <td>@row.User.Email</td>
+                <td>@string.Join(", ", row.Roles)</td>
+                <td><a asp-page="Edit" asp-route-id="@row.User.Id" class="btn btn-sm btn-secondary">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.Page ? "active" : null)">
+                <a class="page-link" href="?page=@i&search=@Model.Search">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
