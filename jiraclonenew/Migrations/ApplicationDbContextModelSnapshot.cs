@@ -230,12 +230,25 @@ namespace jiraclonenew.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("LeadId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("LeadId");
 
                     b.ToTable("Projects");
                 });
@@ -449,6 +462,7 @@ namespace jiraclonenew.Migrations
 
             modelBuilder.Entity("jiraclonenew.Models.Project", b =>
                 {
+                    b.Navigation("Lead");
                     b.Navigation("Tickets");
                     b.Navigation("Sprints");
                 });

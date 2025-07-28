@@ -18,7 +18,10 @@ namespace jiraclonenew.Pages.Projects
 
         public async Task OnGetAsync()
         {
-            Projects = await _context.Projects.AsNoTracking().ToListAsync();
+            Projects = await _context.Projects
+                .Include(p => p.Lead)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
