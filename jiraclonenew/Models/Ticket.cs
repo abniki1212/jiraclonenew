@@ -30,6 +30,11 @@ namespace jiraclonenew.Models
         public int ProjectId { get; set; }
         public Project Project { get; set; } = null!;
 
+        public int? SprintId { get; set; }
+        public Sprint? Sprint { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

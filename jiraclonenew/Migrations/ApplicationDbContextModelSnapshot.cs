@@ -240,6 +240,35 @@ namespace jiraclonenew.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("jiraclonenew.Models.Sprint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumns(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Sprints");
+                });
+
             modelBuilder.Entity("jiraclonenew.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -286,6 +315,56 @@ namespace jiraclonenew.Migrations
                     b.HasIndex("ReporterId");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("jiraclonenew.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumns(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("jiraclonenew.Models.Comment", b =>
+                {
+                    b.HasOne("jiraclonenew.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("jiraclonenew.Models.Ticket", "Ticket")
+                        .WithMany("Comments")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -355,16 +434,23 @@ namespace jiraclonenew.Migrations
                         .WithMany()
                         .HasForeignKey("ReporterId");
 
+                    b.HasOne("jiraclonenew.Models.Sprint", "Sprint")
+                        .WithMany("Tickets")
+                        .HasForeignKey("SprintId");
+
                     b.Navigation("Assignee");
 
                     b.Navigation("Project");
 
                     b.Navigation("Reporter");
+                    b.Navigation("Sprint");
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("jiraclonenew.Models.Project", b =>
                 {
                     b.Navigation("Tickets");
+                    b.Navigation("Sprints");
                 });
 #pragma warning restore 612, 618
         }
