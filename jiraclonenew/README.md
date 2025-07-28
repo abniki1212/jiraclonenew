@@ -2,13 +2,18 @@
 
 This project is an example ASP.NET Core application using Razor Pages and Entity Framework Core.
 
+## Prerequisites
+
+Install the [.NET 8 SDK](https://dotnet.microsoft.com/download) to build and run the project.
+
 ## Setup
 
-To ensure the database schema is up to date, apply the EF Core migrations after configuring the connection string in *appsettings.json*:
+From the repository root run the following commands after configuring the connection string in *appsettings.json*:
 
 ```bash
-# with the .NET SDK installed
+dotnet restore
 dotnet ef database update
+dotnet run --project jiraclonenew/jiraclonenew.csproj
 ```
 
 ## Development
