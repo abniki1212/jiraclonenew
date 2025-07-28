@@ -1,0 +1,29 @@
+@page
+@model jiraclonenew.Pages.Tickets.IndexModel
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<h1>Tickets</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Priority</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var ticket in Model.Tickets)
+{
+        <tr>
+            <td>@ticket.Title</td>
+            <td>@ticket.Type</td>
+            <td>@ticket.Status</td>
+            <td>@ticket.Priority</td>
+        </tr>
+}
+    </tbody>
+</table>
