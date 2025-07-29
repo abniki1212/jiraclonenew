@@ -29,7 +29,7 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Ensure database is up to date
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
