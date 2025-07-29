@@ -8,7 +8,9 @@ Install the [.NET 8 SDK](https://dotnet.microsoft.com/download) to build and run
 
 ## Setup
 
-From the repository root run the following commands after configuring the connection string in *appsettings.json*:
+Before running the project you must configure a valid PostgreSQL connection string.  
+Update `appsettings.Development.json` (or set the `ConnectionStrings__DefaultConnection` environment variable) so the `Username` and `Password` match your local database credentials.  
+Once the connection string is configured run the following commands from the repository root:
 
 ```bash
 dotnet restore
